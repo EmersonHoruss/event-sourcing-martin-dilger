@@ -38,7 +38,7 @@ class RemoveItemAggregateTest {
     )
 
     // WHEN
-    val command = RemoveItemCommand(aggregateId = UUID.fromString(aggregateId), itemId = itemId)
+    val command = RemoveItemCommand(aggregateId = aggregateId, itemId = itemId)
 
     // THEN
     val expectedEvents = mutableListOf<Event>()

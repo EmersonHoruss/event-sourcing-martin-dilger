@@ -2,8 +2,10 @@ package de.eventsourcingbook.cart.domain
 
 import de.eventsourcingbook.cart.common.CommandException
 import de.eventsourcingbook.cart.domain.commands.additem.AddItemCommand
+import de.eventsourcingbook.cart.domain.commands.removeitem.RemoveItemCommand
 import de.eventsourcingbook.cart.events.CartCreatedEvent
 import de.eventsourcingbook.cart.events.ItemAddedEvent
+import de.eventsourcingbook.cart.events.ItemRemovedEvent
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -48,5 +50,19 @@ class CartAggregate {
   @EventSourcingHandler
   fun on(event: ItemAddedEvent) {
     this.cartItems.add(event.itemId)
+  }
+
+  @CommandHandler
+  fun handle(command: RemoveItemCommand) {
+    if (!this.cartItems.contains(command.itemId)) {
+      throw CommandException("Item ${command.itemId} not in the card")
+    }
+
+    AggregateLifecycle.apply(ItemRemovedEvent(command.aggregateId, command.itemId))
+  }
+
+  @EventSourcingHandler
+  fun on(event: ItemRemovedEvent) {
+    this.cartItems.remove(event.itemId)
   }
 }
