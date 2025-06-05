@@ -1,0 +1,30 @@
+package de.eventsourcingbook.cart.clearcart.internal
+
+import de.eventsourcingbook.cart.common.CommandResult
+import de.eventsourcingbook.cart.domain.commands.clearcart.ClearCartCommand
+import java.util.UUID
+import java.util.concurrent.CompletableFuture
+import mu.KotlinLogging
+import org.axonframework.commandhandling.gateway.CommandGateway
+import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
+
+data class ClearCartPayload(var aggregateId: UUID)
+
+@RestController
+class ClearCartResource(private var commandGateway: CommandGateway) {
+
+  var logger = KotlinLogging.logger {}
+
+  @CrossOrigin
+  @PostMapping("/clearcart/{aggregateId}")
+  fun processCommand(
+          @PathVariable("aggregateId") aggregateId: UUID,
+          @RequestBody payload: ClearCartPayload
+  ): CompletableFuture<CommandResult> {
+    return commandGateway.send(ClearCartCommand(aggregateId = aggregateId))
+  }
+}
