@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication
 import org.springframework.boot.test.context.TestConfiguration
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 import org.springframework.context.annotation.Bean
+import org.testcontainers.containers.KafkaContainer
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.utility.DockerImageName
 
@@ -21,12 +22,20 @@ internal class ContainerConfiguration {
   @ServiceConnection
   fun postgresContainer(): PostgreSQLContainer<*> {
     val postgres =
-        PostgreSQLContainer(DockerImageName.parse("postgres"))
-            .withReuse(true)
-            .withExposedPorts(POSTGRES_PORT)
-            .withPassword("postgres")
-            .withUsername("postgres")
+            PostgreSQLContainer(DockerImageName.parse("postgres"))
+                    .withReuse(true)
+                    .withExposedPorts(POSTGRES_PORT)
+                    .withPassword("postgres")
+                    .withUsername("postgres")
     return postgres
+  }
+
+  @Bean
+  @ServiceConnection
+  fun kafkaContainer(): KafkaContainer {
+    val kafkaContainer =
+            KafkaContainer(DockerImageName.parse("confluentic/cp-kafka")).withReuse(true)
+    return kafkaContainer
   }
 
   companion object {

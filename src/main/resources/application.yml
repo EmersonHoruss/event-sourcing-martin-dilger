@@ -19,6 +19,9 @@ spring:
     password: postgres
 
   kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.SpringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       group-id: cart
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
