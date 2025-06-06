@@ -19,6 +19,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.modulith.Modulith
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
+import org.springframework.kafka.annotation.EnableKafka
 
 @Configuration
 class ValidatorConfig {
@@ -75,6 +76,7 @@ class AxonConfig {
             "org.axonframework.eventhandling.tokenstore",
             "org.axonframework.eventsourcing.eventstore.jpa",
             "org.axonframework.modelling.saga.repository.jpa"])
+@EnableKafka
 class SpringApp {
   companion object {
     fun main(args: Array<String>) {
