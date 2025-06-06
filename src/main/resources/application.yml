@@ -1,6 +1,5 @@
 # DataSource Configuration
 spring:
-
   jpa:
     show-sql: false
     hibernate:
@@ -12,12 +11,20 @@ spring:
     password: postgres
     driver-class-name: org.postgresql.Driver
 
-# Flyway Configuration
+  # Flyway Configuration
   flyway:
     url: jdbc:postgresql://localhost:5432/postgres
     locations: classpath:db/migration
     user: postgres
     password: postgres
+
+  kafka:
+    consumer:
+      group-id: cart
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: "*"
 
 axon:
   serializer:
