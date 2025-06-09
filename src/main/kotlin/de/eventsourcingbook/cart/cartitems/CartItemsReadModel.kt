@@ -10,7 +10,7 @@ import java.util.UUID
 class CartItemsReadModelQuery(var aggregateId: UUID) : Query
 
 class CartItemsReadModel : ReadModel {
-  
+
   var aggregateId: UUID? = null
   var totalPrice: Double = 0.0
   var data: MutableList<CartItem> = mutableListOf()
@@ -23,15 +23,13 @@ class CartItemsReadModel : ReadModel {
         }
         is ItemAddedEvent -> {
           this.data.add(
-                  CartItem(
-                          itemId = it.itemId,
-                          aggregateId = it.aggregateId,
-                          description = it.description,
-                          image = it.image,
-                          price = it.price,
-                          productId = it.productId
-                  )
-          )
+              CartItem(
+                  itemId = it.itemId,
+                  aggregateId = it.aggregateId,
+                  description = it.description,
+                  image = it.image,
+                  price = it.price,
+                  productId = it.productId))
 
           this.totalPrice += it.price
         }
@@ -42,10 +40,10 @@ class CartItemsReadModel : ReadModel {
 }
 
 data class CartItem(
-        var itemId: UUID,
-        var aggregateId: UUID,
-        var description: String,
-        var image: String,
-        var price: Double,
-        var productId: UUID
+    var itemId: UUID,
+    var aggregateId: UUID,
+    var description: String,
+    var image: String,
+    var price: Double,
+    var productId: UUID
 )

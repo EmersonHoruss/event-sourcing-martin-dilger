@@ -31,15 +31,13 @@ class CartAggregate {
       throw CommandException("can only add 3 items")
     }
     AggregateLifecycle.apply(
-            ItemAddedEvent(
-                    aggregateId = command.aggregateId,
-                    description = command.description,
-                    image = command.image,
-                    price = command.price,
-                    productId = command.productId,
-                    itemId = command.itemId
-            )
-    )
+        ItemAddedEvent(
+            aggregateId = command.aggregateId,
+            description = command.description,
+            image = command.image,
+            price = command.price,
+            productId = command.productId,
+            itemId = command.itemId))
   }
 
   @EventSourcingHandler

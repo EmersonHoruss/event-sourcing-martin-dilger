@@ -30,47 +30,43 @@ class Max3ItemsPerCartAggregateTest {
     events.add(RandomData.newInstance<CartCreatedEvent> { this.aggregateId = aggregateId })
 
     events.add(
-            RandomData.newInstance<ItemAddedEvent> {
-              this.aggregateId = aggregateId
-              this.description = RandomData.newInstance {}
-              this.image = RandomData.newInstance {}
-              this.price = RandomData.newInstance {}
-              this.itemId = RandomData.newInstance {}
-              this.productId = RandomData.newInstance {}
-            }
-    )
+        RandomData.newInstance<ItemAddedEvent> {
+          this.aggregateId = aggregateId
+          this.description = RandomData.newInstance {}
+          this.image = RandomData.newInstance {}
+          this.price = RandomData.newInstance {}
+          this.itemId = RandomData.newInstance {}
+          this.productId = RandomData.newInstance {}
+        })
     events.add(
-            RandomData.newInstance<ItemAddedEvent> {
-              this.aggregateId = aggregateId
-              this.description = RandomData.newInstance {}
-              this.image = RandomData.newInstance {}
-              this.price = RandomData.newInstance {}
-              this.itemId = RandomData.newInstance {}
-              this.productId = RandomData.newInstance {}
-            }
-    )
+        RandomData.newInstance<ItemAddedEvent> {
+          this.aggregateId = aggregateId
+          this.description = RandomData.newInstance {}
+          this.image = RandomData.newInstance {}
+          this.price = RandomData.newInstance {}
+          this.itemId = RandomData.newInstance {}
+          this.productId = RandomData.newInstance {}
+        })
     events.add(
-            RandomData.newInstance<ItemAddedEvent> {
-              this.aggregateId = aggregateId
-              this.description = RandomData.newInstance {}
-              this.image = RandomData.newInstance {}
-              this.price = RandomData.newInstance {}
-              this.itemId = RandomData.newInstance {}
-              this.productId = RandomData.newInstance {}
-            }
-    )
+        RandomData.newInstance<ItemAddedEvent> {
+          this.aggregateId = aggregateId
+          this.description = RandomData.newInstance {}
+          this.image = RandomData.newInstance {}
+          this.price = RandomData.newInstance {}
+          this.itemId = RandomData.newInstance {}
+          this.productId = RandomData.newInstance {}
+        })
 
     // WHEN
     val command =
-            AddItemCommand(
-                    aggregateId = aggregateId,
-                    description = RandomData.newInstance {},
-                    image = RandomData.newInstance {},
-                    price = RandomData.newInstance {},
-                    totalPrice = RandomData.newInstance {},
-                    itemId = RandomData.newInstance {},
-                    productId = RandomData.newInstance {}
-            )
+        AddItemCommand(
+            aggregateId = aggregateId,
+            description = RandomData.newInstance {},
+            image = RandomData.newInstance {},
+            price = RandomData.newInstance {},
+            totalPrice = RandomData.newInstance {},
+            itemId = RandomData.newInstance {},
+            productId = RandomData.newInstance {})
 
     // THEN
     fixture.given(events).`when`(command).expectException(CommandException::class.java)

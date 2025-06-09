@@ -22,11 +22,11 @@ internal class ContainerConfiguration {
   @ServiceConnection
   fun postgresContainer(): PostgreSQLContainer<*> {
     val postgres =
-            PostgreSQLContainer(DockerImageName.parse("postgres"))
-                    .withReuse(true)
-                    .withExposedPorts(POSTGRES_PORT)
-                    .withPassword("postgres")
-                    .withUsername("postgres")
+        PostgreSQLContainer(DockerImageName.parse("postgres"))
+            .withReuse(true)
+            .withExposedPorts(POSTGRES_PORT)
+            .withPassword("postgres")
+            .withUsername("postgres")
     return postgres
   }
 
@@ -34,7 +34,7 @@ internal class ContainerConfiguration {
   @ServiceConnection
   fun kafkaContainer(): KafkaContainer {
     val kafkaContainer =
-            KafkaContainer(DockerImageName.parse("confluentic/cp-kafka")).withReuse(true)
+        KafkaContainer(DockerImageName.parse("confluentic/cp-kafka")).withReuse(true)
     return kafkaContainer
   }
 

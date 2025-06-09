@@ -1,12 +1,12 @@
 package de.eventsourcingbook.cart.cartitems.integration
 
+import de.eventsourcingbook.cart.cartitems.CartItemsReadModel
+import de.eventsourcingbook.cart.cartitems.CartItemsReadModelQuery
 import de.eventsourcingbook.cart.common.CommandResult
 import de.eventsourcingbook.cart.common.support.BaseIntegrationTest
 import de.eventsourcingbook.cart.common.support.RandomData
 import de.eventsourcingbook.cart.common.support.awaitUntilAssserted
 import de.eventsourcingbook.cart.domain.commands.additem.AddItemCommand
-import de.eventsourcingbook.cart.cartitems.CartItemsReadModel
-import de.eventsourcingbook.cart.cartitems.CartItemsReadModelQuery
 import java.util.UUID
 import org.assertj.core.api.Assertions.assertThat
 import org.axonframework.commandhandling.gateway.CommandGateway
@@ -29,10 +29,7 @@ class CartItemsReadModelTest : BaseIntegrationTest() {
 
     awaitUntilAssserted {
       var readModel =
-              queryGateway.query(
-                      CartItemsReadModelQuery(aggregateId),
-                      CartItemsReadModel::class.java
-              )
+          queryGateway.query(CartItemsReadModelQuery(aggregateId), CartItemsReadModel::class.java)
 
       assertThat(readModel.get().data).isNotEmpty
     }

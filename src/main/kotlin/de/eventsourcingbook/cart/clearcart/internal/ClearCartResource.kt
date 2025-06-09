@@ -22,8 +22,8 @@ class ClearCartResource(private var commandGateway: CommandGateway) {
   @CrossOrigin
   @PostMapping("/clearcart/{aggregateId}")
   fun processCommand(
-          @PathVariable("aggregateId") aggregateId: UUID,
-          @RequestBody payload: ClearCartPayload
+      @PathVariable("aggregateId") aggregateId: UUID,
+      @RequestBody payload: ClearCartPayload
   ): CompletableFuture<CommandResult> {
     return commandGateway.send(ClearCartCommand(aggregateId = aggregateId))
   }

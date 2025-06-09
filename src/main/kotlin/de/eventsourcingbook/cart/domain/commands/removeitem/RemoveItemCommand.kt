@@ -5,6 +5,6 @@ import java.util.UUID
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
 data class RemoveItemCommand(
-        @TargetAggregateIdentifier override var aggregateId: UUID,
-        var itemId: UUID
+    @TargetAggregateIdentifier override var aggregateId: UUID,
+    var itemId: UUID
 ) : Command

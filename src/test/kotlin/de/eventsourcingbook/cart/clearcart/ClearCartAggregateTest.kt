@@ -38,12 +38,12 @@ class ClearCartAggregateTest {
     val expectedEvents = mutableListOf<Event>()
 
     expectedEvents.add(
-            RandomData.newInstance<CartClearedEvent> { this.aggregateId = command.aggregateId }
-    )
+        RandomData.newInstance<CartClearedEvent> { this.aggregateId = command.aggregateId })
 
-    fixture.given(events)
-            .`when`(command)
-            .expectSuccessfulHandlerExecution()
-            .expectEvents(*expectedEvents.toTypedArray())
+    fixture
+        .given(events)
+        .`when`(command)
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(*expectedEvents.toTypedArray())
   }
 }

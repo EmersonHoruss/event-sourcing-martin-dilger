@@ -16,10 +16,10 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.modulith.Modulith
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
-import org.springframework.kafka.annotation.EnableKafka
 
 @Configuration
 class ValidatorConfig {

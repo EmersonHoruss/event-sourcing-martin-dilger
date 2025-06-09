@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 data class AddItemPayload(
-        var aggregateId: UUID,
-        var description: String,
-        var image: String,
-        var price: Double,
-        var totalPrice: Double,
-        var itemId: UUID,
-        var productId: UUID
+    var aggregateId: UUID,
+    var description: String,
+    var image: String,
+    var price: Double,
+    var totalPrice: Double,
+    var itemId: UUID,
+    var productId: UUID
 )
 
 @RestController
@@ -29,19 +29,17 @@ class AddItemResource(private var commandGateway: CommandGateway) {
   @CrossOrigin
   @PostMapping("/additem/{aggregateId}")
   fun processCommand(
-          @PathVariable("aggregateId") aggregateId: UUID,
-          @RequestBody payload: AddItemPayload
+      @PathVariable("aggregateId") aggregateId: UUID,
+      @RequestBody payload: AddItemPayload
   ): CompletableFuture<CommandResult> {
     return commandGateway.send(
-            AddItemCommand(
-                    aggregateId = aggregateId,
-                    description = payload.description,
-                    image = payload.image,
-                    price = payload.price,
-                    totalPrice = payload.totalPrice,
-                    itemId = payload.itemId,
-                    productId = payload.productId
-            )
-    )
+        AddItemCommand(
+            aggregateId = aggregateId,
+            description = payload.description,
+            image = payload.image,
+            price = payload.price,
+            totalPrice = payload.totalPrice,
+            itemId = payload.itemId,
+            productId = payload.productId))
   }
 }

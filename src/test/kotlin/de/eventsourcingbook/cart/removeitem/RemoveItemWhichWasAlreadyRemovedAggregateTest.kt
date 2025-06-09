@@ -26,11 +26,10 @@ class RemoveItemWhichWasAlreadyRemovedAggregateTest {
     events.add(RandomData.newInstance<CartCreatedEvent> { this.aggregateId = aggregateId })
     events.add(RandomData.newInstance<ItemAddedEvent> { this.itemId = itemId })
     events.add(
-            RandomData.newInstance<ItemRemovedEvent> {
-              this.aggregateId = aggregateId
-              this.itemId = itemId
-            }
-    )
+        RandomData.newInstance<ItemRemovedEvent> {
+          this.aggregateId = aggregateId
+          this.itemId = itemId
+        })
 
     // WHEN
     val command = RemoveItemCommand(aggregateId = aggregateId, itemId = itemId)

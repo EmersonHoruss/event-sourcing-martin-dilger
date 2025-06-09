@@ -4,6 +4,6 @@ import java.util.UUID
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
 data class ChangeInventoryCommand(
-        @TargetAggregateIdentifier var productId: UUID,
-        var inventory: Int
+    @TargetAggregateIdentifier var productId: UUID,
+    var inventory: Int
 )

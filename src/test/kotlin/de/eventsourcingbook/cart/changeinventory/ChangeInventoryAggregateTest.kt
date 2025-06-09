@@ -26,24 +26,22 @@ class ChangeInventoryAggregateTest {
 
     // WHEN
     val command =
-            ChangeInventoryCommand(
-                    inventory = RandomData.newInstance {},
-                    productId = RandomData.newInstance {}
-            )
+        ChangeInventoryCommand(
+            inventory = RandomData.newInstance {}, productId = RandomData.newInstance {})
 
     // THEN
     val expectedEvents = mutableListOf<Event>()
 
     expectedEvents.add(
-            RandomData.newInstance<InventoryChangedEvent> {
-              this.inventory = command.inventory
-              this.productId = command.productId
-            }
-    )
+        RandomData.newInstance<InventoryChangedEvent> {
+          this.inventory = command.inventory
+          this.productId = command.productId
+        })
 
-    fixture.given(events)
-            .`when`(command)
-            .expectSuccessfulHandlerExecution()
-            .expectEvents(*expectedEvents.toTypedArray())
+    fixture
+        .given(events)
+        .`when`(command)
+        .expectSuccessfulHandlerExecution()
+        .expectEvents(*expectedEvents.toTypedArray())
   }
 }

@@ -22,11 +22,10 @@ class RemoveItemResource(private var commandGateway: CommandGateway) {
   @CrossOrigin
   @PostMapping("/removeitem/{aggregateId}")
   fun processCommand(
-          @PathVariable("aggregateId") aggregateId: UUID,
-          @RequestBody payload: RemoveItemPayload
+      @PathVariable("aggregateId") aggregateId: UUID,
+      @RequestBody payload: RemoveItemPayload
   ): CompletableFuture<CommandResult> {
     return commandGateway.send(
-            RemoveItemCommand(aggregateId = aggregateId, itemId = payload.itemId)
-    )
+        RemoveItemCommand(aggregateId = aggregateId, itemId = payload.itemId))
   }
 }

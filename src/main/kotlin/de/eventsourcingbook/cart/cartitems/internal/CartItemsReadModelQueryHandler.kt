@@ -9,17 +9,17 @@ import org.springframework.stereotype.Component
 
 @Component
 class CartItemsReadModelQueryHandler(val eventStore: EventStore) :
-        QueryHandler<CartItemsReadModelQuery, CartItemsReadModel> {
+    QueryHandler<CartItemsReadModelQuery, CartItemsReadModel> {
 
   @org.axonframework.queryhandling.QueryHandler
   override fun handleQuery(query: CartItemsReadModelQuery): CartItemsReadModel {
     val events =
-            eventStore
-                    .readEvents(query.aggregateId.toString())
-                    .asStream()
-                    .filter { it.payload is Event }
-                    .map { it.payload as Event }
-                    .toList()
+        eventStore
+            .readEvents(query.aggregateId.toString())
+            .asStream()
+            .filter { it.payload is Event }
+            .map { it.payload as Event }
+            .toList()
 
     return CartItemsReadModel().applyEvent(events)
   }
