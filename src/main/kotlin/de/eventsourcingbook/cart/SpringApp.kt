@@ -6,6 +6,7 @@ import org.axonframework.commandhandling.gateway.CommandGateway
 import org.axonframework.commandhandling.gateway.DefaultCommandGateway
 import org.axonframework.config.EventProcessingConfigurer
 import org.axonframework.eventhandling.PropagatingErrorHandler
+import org.axonframework.eventhandling.LoggingErrorHandler
 import org.axonframework.messaging.MessageDispatchInterceptor
 import org.axonframework.messaging.MessageHandlerInterceptor
 import org.axonframework.messaging.interceptors.BeanValidationInterceptor
@@ -45,6 +46,8 @@ class AxonConfig {
   @Autowired
   fun configurationEventHandling(config: EventProcessingConfigurer) {
     config.registerDefaultListenerInvocationErrorHandler { PropagatingErrorHandler.instance() }
+
+    config.registerListenerInvocationErrorHandler("inventories") { LoggingErrorHandler() }
   }
 
   @Bean
