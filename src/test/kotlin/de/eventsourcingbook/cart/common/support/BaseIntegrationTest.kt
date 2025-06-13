@@ -33,5 +33,5 @@ abstract class BaseIntegrationTest {
 }
 
 fun awaitUntilAssserted(fn: () -> Unit) {
-  Awaitility.await().pollInSameThread().atMost(Duration.ofSeconds(15)).untilAsserted { fn() }
+  Awaitility.await().pollInSameThread().atMost(Duration.ofSeconds(5)).untilAsserted { fn() }
 }
