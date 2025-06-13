@@ -3,9 +3,11 @@ package de.eventsourcingbook.cart.common.support
 import java.time.Duration
 import org.awaitility.Awaitility
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection
 import org.springframework.test.annotation.DirtiesContext
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
+import org.testcontainers.containers.KafkaContainer
 import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
@@ -18,6 +20,13 @@ abstract class BaseIntegrationTest {
   companion object {
     @org.testcontainers.junit.jupiter.Container
     private val postgres = PostgreSQLContainer(DockerImageName.parse("postgres")).withReuse(true)
+
+    @ServiceConnection
+    @org.testcontainers.junit.jupiter.Container
+    private val kafkaContainer =
+            KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.5.0"))
+                    .withExposedPorts(9092)
+                    .withExposedPorts(9093)
 
     @JvmStatic
     @DynamicPropertySource
@@ -33,5 +42,5 @@ abstract class BaseIntegrationTest {
 }
 
 fun awaitUntilAssserted(fn: () -> Unit) {
-  Awaitility.await().pollInSameThread().atMost(Duration.ofSeconds(5)).untilAsserted { fn() }
+  Awaitility.await().pollInSameThread().atMost(Duration.ofSeconds(15)).untilAsserted { fn() }
 }

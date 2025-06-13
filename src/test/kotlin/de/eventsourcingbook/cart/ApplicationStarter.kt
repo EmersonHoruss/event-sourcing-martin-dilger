@@ -34,7 +34,7 @@ internal class ContainerConfiguration {
   @ServiceConnection
   fun kafkaContainer(): KafkaContainer {
     val kafkaContainer =
-        KafkaContainer(DockerImageName.parse("confluentic/cp-kafka")).withReuse(true)
+        KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.5.0")).withExposedPorts(9092)
     return kafkaContainer
   }
 
