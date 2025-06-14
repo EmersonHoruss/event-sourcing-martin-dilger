@@ -1,4 +1,4 @@
-package de.eversourcingbook.cart.domain
+package de.eventsourcingbook.cart.domain
 
 import de.eventsourcingbook.cart.domain.commands.changeprice.ChangePriceCommand
 import de.eventsourcingbook.cart.events.PriceChangedEvent

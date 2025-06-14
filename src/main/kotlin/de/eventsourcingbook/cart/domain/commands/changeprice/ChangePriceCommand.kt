@@ -4,7 +4,7 @@ import java.util.UUID
 import org.axonframework.modelling.command.TargetAggregateIdentifier
 
 data class ChangePriceCommand(
-        @TargetAggregateIdentifier val productId: UUID,
-        val newPrice: Double,
-        val oldPrice: Double
+        @TargetAggregateIdentifier var productId: UUID,
+        var newPrice: Double,
+        var oldPrice: Double
 )
