@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.util.UUID
 
 data class ExternalPriceChangedEvent(
-        val productId: UUID,
-        val price: BigDecimal,
-        val oldPrice: BigDecimal
+        var productId: UUID,
+        var price: BigDecimal,
+        var oldPrice: BigDecimal
 )
