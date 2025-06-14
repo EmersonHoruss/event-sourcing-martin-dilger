@@ -9,13 +9,9 @@ import org.springframework.stereotype.Component
 class ChangePriceKafkaConsumer(var commandGateway: CommandGateway) {
 
   @KafkaListener(topics = ["price_changes"])
-  fun handle(externalPriceChangedEvent: ExternalPriceChangedEvent) {
+  fun handle(event: ExternalPriceChangedEvent) {
     commandGateway.send<ChangePriceCommand>(
-            ChangePriceCommand(
-                    externalPriceChangedEvent.productId,
-                    externalPriceChangedEvent.price.toDouble(),
-                    externalPriceChangedEvent.oldPrice.toDouble()
-            )
+            ChangePriceCommand(event.productId, event.price.toDouble(), event.oldPrice.toDouble())
     )
   }
 }
