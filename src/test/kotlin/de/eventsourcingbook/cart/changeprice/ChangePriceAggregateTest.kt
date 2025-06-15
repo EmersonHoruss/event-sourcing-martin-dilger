@@ -4,7 +4,7 @@ import de.eventsourcingbook.cart.common.Event
 import de.eventsourcingbook.cart.common.support.RandomData
 import de.eventsourcingbook.cart.domain.commands.changeprice.ChangePriceCommand
 import de.eventsourcingbook.cart.events.PriceChangedEvent
-import de.eversourcingbook.cart.domain.PricingAggregate
+import de.eventsourcingbook.cart.domain.PricingAggregate
 import org.axonframework.test.aggregate.AggregateTestFixture
 import org.axonframework.test.aggregate.FixtureConfiguration
 import org.junit.jupiter.api.BeforeEach
