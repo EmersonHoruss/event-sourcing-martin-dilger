@@ -1,4 +1,4 @@
-package de.eversourcingbook.cart.inventories.internal
+package de.eventsourcingbook.cart.inventories.internal
 
 import de.eventsourcingbook.cart.inventories.InventoriesReadModel
 import de.eventsourcingbook.cart.inventories.InventoriesReadModelQuery
