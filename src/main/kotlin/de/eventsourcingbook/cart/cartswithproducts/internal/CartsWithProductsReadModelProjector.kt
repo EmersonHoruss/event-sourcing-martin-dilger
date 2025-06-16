@@ -14,7 +14,7 @@ interface CartsWithProductsReadModelRepository :
 
   fun findByProductId(productId: UUID): List<CartsWithProductsReadModelEntity>
 
-  @Modifying fun deleteAllByAggregateId(cartId: UUID): List<CartsWithProductsReadModelEntity>
+  @Modifying fun deleteAllByAggregateId(aggregateId: UUID): List<CartsWithProductsReadModelEntity>
 }
 
 @Component

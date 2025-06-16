@@ -6,9 +6,11 @@ import jakarta.persistence.Id
 import jakarta.persistence.IdClass
 import java.io.Serializable
 import java.util.UUID
+import de.eventsourcingbook.cart.common.NoArg
 
 data class CartsWithProductsReadModelQuery(val productId: UUID)
 
+@NoArg
 data class CartProductId(var aggregateId: UUID, var productId: UUID) : Serializable
 
 @IdClass(CartProductId::class)
