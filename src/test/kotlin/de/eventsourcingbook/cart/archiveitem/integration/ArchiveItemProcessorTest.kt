@@ -45,7 +45,7 @@ class ArchiveItemProcessorTest : BaseIntegrationTest() {
 
     awaitUntilAssserted {
       streamAssertions.assertEvent(aggregateId.toString()) {
-        it is ItemArchivedEvent
+        it is ItemArchivedEvent && it.aggregateId == aggregateId && it.itemId == itemId
       }
     }
   }
