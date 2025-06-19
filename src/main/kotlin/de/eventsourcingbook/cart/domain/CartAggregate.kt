@@ -1,10 +1,13 @@
 package de.eventsourcingbook.cart.domain
 
+import de.eventsourcinbook.cart.events.CartSubmittedEvent
+import de.eventsourcinbook.cart.events.OrderedProducts
 import de.eventsourcingbook.cart.common.CommandException
 import de.eventsourcingbook.cart.domain.commands.additem.AddItemCommand
 import de.eventsourcingbook.cart.domain.commands.archiveitem.ArchiveItemCommand
 import de.eventsourcingbook.cart.domain.commands.clearcart.ClearCartCommand
 import de.eventsourcingbook.cart.domain.commands.removeitem.RemoveItemCommand
+import de.eventsourcingbook.cart.domain.commands.submitcart.SubmitCartCommand
 import de.eventsourcingbook.cart.events.CartClearedEvent
 import de.eventsourcingbook.cart.events.CartCreatedEvent
 import de.eventsourcingbook.cart.events.ItemAddedEvent
@@ -23,11 +26,17 @@ typealias CartItemId = UUID
 
 typealias ProductId = UUID
 
+typealias Price = Double
+
 @Aggregate
 class CartAggregate {
   @AggregateIdentifier var aggregateId: UUID? = null
 
   val cartItems = mutableMapOf<CartItemId, ProductId>()
+
+  val productPrice = mutableMapOf<ProductId, Price>()
+
+  var submitted = false
 
   @CommandHandler
   @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
@@ -58,6 +67,7 @@ class CartAggregate {
   @EventSourcingHandler
   fun on(event: ItemAddedEvent) {
     this.cartItems[event.itemId] = event.productId
+    this.productPrice[event.productId] = event.price
   }
 
   @CommandHandler
@@ -94,5 +104,35 @@ class CartAggregate {
   @EventSourcingHandler
   fun on(event: ItemArchivedEvent) {
     this.cartItems.remove(event.itemId)
+  }
+
+  @CommandHandler
+  fun handle(command: SubmitCartCommand) {
+    if (cartItems.isEmpty()) {
+      throw CommandException("cannot submit empty cart")
+    }
+
+    if (submitted) {
+      throw CommandException("cannot submit a cart twice")
+    }
+
+    AggregateLifecycle.apply(
+            CartSubmittedEvent(
+                    aggregateId = command.aggregateId,
+                    orderedProducts =
+                            cartItems.map {
+                              OrderedProducts(
+                                      productId = it.value,
+                                      price = productPrice[it.value]!!
+                              )
+                            },
+                    totalPrice = cartItems.map { productPrice[it.value]!! }.sumOf { it }
+            )
+    )
+  }
+
+  @EventSourcingHandler
+  fun on(@Suppress("UNUSED_PARAMETER") event: CartSubmittedEvent) {
+    this.submitted = true
   }
 }
