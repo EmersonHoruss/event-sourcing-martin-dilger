@@ -1,7 +1,5 @@
 package de.eventsourcingbook.cart.domain
 
-import de.eventsourcingbook.cart.events.CartSubmittedEvent
-import de.eventsourcingbook.cart.events.OrderedProduct
 import de.eventsourcingbook.cart.common.CommandException
 import de.eventsourcingbook.cart.domain.commands.additem.AddItemCommand
 import de.eventsourcingbook.cart.domain.commands.archiveitem.ArchiveItemCommand
@@ -10,9 +8,12 @@ import de.eventsourcingbook.cart.domain.commands.removeitem.RemoveItemCommand
 import de.eventsourcingbook.cart.domain.commands.submitcart.SubmitCartCommand
 import de.eventsourcingbook.cart.events.CartClearedEvent
 import de.eventsourcingbook.cart.events.CartCreatedEvent
+import de.eventsourcingbook.cart.events.CartPublishedEvent
+import de.eventsourcingbook.cart.events.CartSubmittedEvent
 import de.eventsourcingbook.cart.events.ItemAddedEvent
 import de.eventsourcingbook.cart.events.ItemArchivedEvent
 import de.eventsourcingbook.cart.events.ItemRemovedEvent
+import de.eventsourcingbook.cart.events.OrderedProduct
 import java.util.UUID
 import org.axonframework.commandhandling.CommandHandler
 import org.axonframework.eventsourcing.EventSourcingHandler
@@ -33,10 +34,9 @@ class CartAggregate {
   @AggregateIdentifier var aggregateId: UUID? = null
 
   val cartItems = mutableMapOf<CartItemId, ProductId>()
-
   val productPrice = mutableMapOf<ProductId, Price>()
-
   var submitted = false
+  var published = false
 
   @CommandHandler
   @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
@@ -121,10 +121,7 @@ class CartAggregate {
                     aggregateId = command.aggregateId,
                     orderedProducts =
                             cartItems.map {
-                              OrderedProduct(
-                                      productId = it.value,
-                                      price = productPrice[it.value]!!
-                              )
+                              OrderedProduct(productId = it.value, price = productPrice[it.value]!!)
                             },
                     totalPrice = cartItems.map { productPrice[it.value]!! }.sumOf { it }
             )
@@ -135,4 +132,21 @@ class CartAggregate {
   fun on(@Suppress("UNUSED_PARAMETER") event: CartSubmittedEvent) {
     this.submitted = true
   }
+
+  fun publish() {
+    if (!this.submitted) {
+      throw CommandException("cannot publish submitted cart")
+    }
+    if (this.published) {
+      throw CommandException("cannot publish cart twice")
+    }
+    AggregateLifecycle.apply(CartPublishedEvent(this.aggregateId!!))
+  }
+
+  @EventSourcingHandler
+  fun on(@Suppress("UNUSED_PARAMETER") event: CartPublishedEvent) {
+    this.published = true
+  }
+
+  fun failPublication(){}
 }
