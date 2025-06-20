@@ -1,7 +1,7 @@
 package de.eventsourcingbook.cart.submitcart
 
-import de.eventsourcinbook.cart.events.CartSubmittedEvent
-import de.eventsourcinbook.cart.events.OrderedProducts
+import de.eventsourcingbook.cart.events.CartSubmittedEvent
+import de.eventsourcingbook.cart.events.OrderedProduct
 import de.eventsourcingbook.cart.common.Event
 import de.eventsourcingbook.cart.common.support.RandomData
 import de.eventsourcingbook.cart.domain.CartAggregate
@@ -63,8 +63,8 @@ class SubmitCartAggregateTest {
               this.aggregateId = command.aggregateId
               this.orderedProducts =
                       listOf(
-                              OrderedProducts(productId1, price1),
-                              OrderedProducts(productId2, price2)
+                              OrderedProduct(productId1, price1),
+                              OrderedProduct(productId2, price2)
                       )
               this.totalPrice = price1 + price2
             }

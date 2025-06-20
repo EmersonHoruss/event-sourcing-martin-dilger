@@ -1,6 +1,6 @@
 package de.eventsourcingbook.cart.submitcart
 
-import de.eventsourcinbook.cart.events.CartSubmittedEvent
+import de.eventsourcingbook.cart.events.CartSubmittedEvent
 import de.eventsourcingbook.cart.common.CommandException
 import de.eventsourcingbook.cart.common.Event
 import de.eventsourcingbook.cart.common.support.RandomData

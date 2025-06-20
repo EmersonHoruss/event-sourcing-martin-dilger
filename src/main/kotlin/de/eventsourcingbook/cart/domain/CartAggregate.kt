@@ -1,7 +1,7 @@
 package de.eventsourcingbook.cart.domain
 
-import de.eventsourcinbook.cart.events.CartSubmittedEvent
-import de.eventsourcinbook.cart.events.OrderedProducts
+import de.eventsourcingbook.cart.events.CartSubmittedEvent
+import de.eventsourcingbook.cart.events.OrderedProduct
 import de.eventsourcingbook.cart.common.CommandException
 import de.eventsourcingbook.cart.domain.commands.additem.AddItemCommand
 import de.eventsourcingbook.cart.domain.commands.archiveitem.ArchiveItemCommand
@@ -121,7 +121,7 @@ class CartAggregate {
                     aggregateId = command.aggregateId,
                     orderedProducts =
                             cartItems.map {
-                              OrderedProducts(
+                              OrderedProduct(
                                       productId = it.value,
                                       price = productPrice[it.value]!!
                               )
