@@ -25,9 +25,9 @@ class ChangePriceProcessorTest : BaseIntegrationTest() {
     val oldPrice = BigDecimal.valueOf(26.99)
 
     awaitUntilAssserted {
-      kafkaTemplate
-              .send("price_changes", ExternalPriceChangedEvent(aggregateId, newPrice, oldPrice))
-              .get()
+      kafkaTemplate.executeInTransaction {
+        it.send("price_changes", ExternalPriceChangedEvent(aggregateId, newPrice, oldPrice)).get()
+      }
 
       streamAssertions.assertEvent(aggregateId.toString()) { it is PriceChangedEvent }
     }
