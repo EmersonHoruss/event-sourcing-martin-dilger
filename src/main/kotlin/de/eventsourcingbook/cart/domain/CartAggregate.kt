@@ -8,6 +8,7 @@ import de.eventsourcingbook.cart.domain.commands.removeitem.RemoveItemCommand
 import de.eventsourcingbook.cart.domain.commands.submitcart.SubmitCartCommand
 import de.eventsourcingbook.cart.events.CartClearedEvent
 import de.eventsourcingbook.cart.events.CartCreatedEvent
+import de.eventsourcingbook.cart.events.CartPublicationFailedEvent
 import de.eventsourcingbook.cart.events.CartPublishedEvent
 import de.eventsourcingbook.cart.events.CartSubmittedEvent
 import de.eventsourcingbook.cart.events.ItemAddedEvent
@@ -37,6 +38,7 @@ class CartAggregate {
   val productPrice = mutableMapOf<ProductId, Price>()
   var submitted = false
   var published = false
+  var publicationFailed = false
 
   @CommandHandler
   @CreationPolicy(AggregateCreationPolicy.CREATE_IF_MISSING)
@@ -148,5 +150,12 @@ class CartAggregate {
     this.published = true
   }
 
-  fun failPublication(){}
+  fun failPublication() {
+    AggregateLifecycle.apply(CartPublicationFailedEvent(this.aggregateId!!))
+  }
+
+  @EventSourcingHandler
+  fun on(@Suppress("UNUSED_PARAMETER") event: CartPublicationFailedEvent) {
+    this.publicationFailed = true
+  }
 }
