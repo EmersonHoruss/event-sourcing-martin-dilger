@@ -8,9 +8,11 @@ import org.axonframework.config.ProcessingGroup
 import org.axonframework.eventhandling.EventHandler
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.axonframework.eventhandling.DisallowReplay
 
 @Component
 @ProcessingGroup("publish_cart")
+@DisallowReplay
 class PublishCartAutomationProcessor : Processor {
 
   @Autowired lateinit var commandGateway: CommandGateway
