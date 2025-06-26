@@ -12,7 +12,6 @@ import org.axonframework.eventhandling.DisallowReplay
 
 @Component
 @ProcessingGroup("publish_cart")
-@DisallowReplay
 class PublishCartAutomationProcessor : Processor {
 
   @Autowired lateinit var commandGateway: CommandGateway
