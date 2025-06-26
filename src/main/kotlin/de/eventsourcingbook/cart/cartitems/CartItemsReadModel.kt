@@ -30,7 +30,8 @@ class CartItemsReadModel : ReadModel {
                           description = it.description,
                           image = it.image,
                           price = it.price,
-                          productId = it.productId
+                          productId = it.productId,
+                          deviceFingerPrint = it.deviceFingerPrint
                   )
           )
 
@@ -53,5 +54,6 @@ data class CartItem(
         var description: String,
         var image: String,
         var price: Double,
-        var productId: UUID
+        var productId: UUID,
+        var deviceFingerPrint: String
 )
