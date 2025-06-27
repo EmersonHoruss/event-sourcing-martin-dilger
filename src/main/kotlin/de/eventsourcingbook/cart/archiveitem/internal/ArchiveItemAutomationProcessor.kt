@@ -10,8 +10,10 @@ import org.axonframework.eventhandling.EventHandler
 import org.axonframework.queryhandling.QueryGateway
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.axonframework.eventhandling.DisallowReplay
 
 @Component
+@DisallowReplay
 class ArchiveItemAutomationProcessor : Processor {
   @Autowired lateinit var commandGateway: CommandGateway
 
